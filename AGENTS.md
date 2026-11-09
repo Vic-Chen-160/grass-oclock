@@ -37,5 +37,6 @@ Read this before changing anything. The README is for visitors; this file is for
 
 ## Status
 
-- 2026-11-09: built locally, waiting for Vic's review before the repo is created and made public.
-- After it's public: enable GitHub Pages (main branch, root), then post on X with the repo link in the main post.
+- 2026-11-09: public at github.com/Vic-Chen-160/grass-oclock, GitHub Pages on (main, root):
+  https://vic-chen-160.github.io/grass-oclock/
+- Next: post on X with the repo link in the main post (Vic confirms the screenshot before publishing).

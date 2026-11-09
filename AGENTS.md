@@ -39,4 +39,4 @@ Read this before changing anything. The README is for visitors; this file is for
 
 - 2026-11-09: public at github.com/Vic-Chen-160/grass-oclock, GitHub Pages on (main, root):
   https://vic-chen-160.github.io/grass-oclock/
-- Next: post on X with the repo link in the main post (Vic confirms the screenshot before publishing).
+- Announced on X: https://x.com/Lil_Vic_160/status/2119707771503579646

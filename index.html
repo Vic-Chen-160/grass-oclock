@@ -1,0 +1,58 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+  <title>grass o'clock</title>
+  <meta name="description" content="A painted patch of grass that follows your local time: day, dusk, twilight and night. WebGL, no libraries.">
+  <meta property="og:title" content="grass o'clock">
+  <meta property="og:description" content="A painted patch of grass that follows your local time.">
+  <meta property="og:image" content="https://vic-chen-160.github.io/grass-oclock/media/cover.png">
+  <meta name="twitter:card" content="summary_large_image">
+  <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 34 34%22%3E%3Cpath fill=%22%2322251e%22 d=%22M16.2 27c-.2-4.8.1-9.2 1-13.4.3-1.3 1.8-1.2 1.8.1-.3 4.6-.4 8.9-.1 13.3zM16.6 26.6c-1.6-3.6-4-6.2-7.6-8.2-1-.6-.4-1.9.7-1.5 3.7 1.5 6.4 4.4 8.2 8.8zM17.4 26.6c1.5-4.4 4.2-7.6 8.4-9.4 1.1-.5 1.7.8.8 1.4-3.6 2.3-6 5.2-7.4 8.8z%22/%3E%3C/svg%3E">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght,SOFT,WONK@9..144,100..900,0..100,0..1&family=Geist:wght@100..900&display=swap">
+  <link rel="stylesheet" href="demo/demo.css">
+</head>
+<body>
+  <div class="sky" aria-hidden="true"><canvas></canvas></div>
+
+  <header class="top">
+    <a class="top__name" href="https://github.com/Vic-Chen-160/grass-oclock">grass o'clock</a>
+    <nav class="top__links">
+      <a href="https://github.com/Vic-Chen-160/grass-oclock">Source</a>
+      <a href="https://therapist-160.github.io" target="_blank" rel="noopener"><span class="wide">Made by </span>therapist.160</a>
+    </nav>
+  </header>
+
+  <section class="hero">
+    <h1 class="hero__time"><span class="hero__clock">--:--</span></h1>
+    <p class="hero__line"></p>
+  </section>
+
+  <div class="stage" role="img" aria-label="A patch of grass lit for the current time of day. Drag to turn it."><canvas></canvas></div>
+
+  <div class="dial">
+    <div class="dial__inner">
+      <div class="dial__track">
+        <span class="dial__bands" aria-hidden="true"></span>
+        <input class="dial__range" type="range" min="0" max="1439" step="1" value="720" aria-label="Time of day">
+      </div>
+      <div class="dial__meta">
+        <p class="dial__hint">Drag <span class="wide">the field </span>to turn<span class="wide"> it</span></p>
+        <p class="dial__keys">
+          <button class="dial__btn dial__now" type="button">Now</button>
+          <button class="dial__btn dial__play" type="button" aria-pressed="false">Play a day</button>
+        </p>
+      </div>
+    </div>
+  </div>
+
+  <script src="src/sky.js"></script>
+  <script src="src/sunlight.js"></script>
+  <script src="src/field.js"></script>
+  <script src="src/drift.js"></script>
+  <script src="demo/demo.js"></script>
+</body>
+</html>

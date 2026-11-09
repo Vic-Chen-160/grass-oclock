@@ -1,0 +1,123 @@
+/* grass-oclock demo page. sunlight.js overrides these colour variables after dusk. */
+:root {
+  --paper: #faf8f2; --ink: #22251e; --ink-2: #4c5243; --ink-3: #6a7060;
+  --line: #ddd9cb; --line-soft: #eae7dc; --red: #b8431f;
+  --primary: #141410; --primary-hover: #31322d; --on-primary: #f9f8f3;
+  --serif: 'Fraunces', Georgia, 'Times New Roman', serif;
+  --sans: 'Geist', ui-sans-serif, system-ui, -apple-system, sans-serif;
+  --ease-out: cubic-bezier(.16, 1, .3, 1);
+  --gutter: clamp(1rem, 4.5vw, 4rem);
+  color-scheme: light;
+}
+
+*, *::before, *::after { box-sizing: border-box; }
+html, body { margin: 0; height: 100%; }
+html { -webkit-text-size-adjust: 100%; text-size-adjust: 100%; }
+body {
+  background: var(--paper); color: var(--ink);
+  font-family: var(--sans); font-size: 1rem; line-height: 1.5; letter-spacing: -0.015em;
+  -webkit-font-smoothing: antialiased; overflow: hidden;
+  cursor: grab; touch-action: pan-y;
+}
+body.is-dragging { cursor: grabbing; user-select: none; }
+a { color: inherit; text-decoration: none; }
+button { font: inherit; color: inherit; background: none; border: 0; padding: 0; cursor: pointer; }
+h1, p { margin: 0; font-weight: 400; }
+
+/* ---------- sky (clouds by day, stars by night) ---------- */
+.sky {
+  position: fixed; inset: 0 0 auto 0; height: 88vh; z-index: 0; pointer-events: none; isolation: isolate;
+  -webkit-mask-image: linear-gradient(#000 0, #000 30%, rgba(0, 0, 0, .5) 54%, transparent 70%);
+  mask-image: linear-gradient(#000 0, #000 30%, rgba(0, 0, 0, .5) 54%, transparent 70%);
+  opacity: var(--sky-op, .32);
+}
+.sky canvas { position: absolute; inset: 0; width: 100%; height: 100%; display: block; }
+.sky .sky__night { opacity: 0; }
+@media (orientation: portrait) { .sky canvas:first-child { object-fit: cover; object-position: 50% 0; } }
+
+/* ---------- header ---------- */
+.top {
+  position: fixed; top: 0; left: 0; right: 0; z-index: 20;
+  display: flex; align-items: center; justify-content: space-between; gap: 1rem;
+  padding: max(1.1rem, env(safe-area-inset-top)) var(--gutter) 0;
+  font-size: .8125rem; pointer-events: none;
+}
+.top > * { pointer-events: auto; }
+.top__name {
+  font-family: var(--serif); font-size: 1.3rem; line-height: 1; letter-spacing: -0.02em; white-space: nowrap;
+  font-variation-settings: 'wght' 420, 'opsz' 36, 'SOFT' 0, 'WONK' 1;
+}
+.top__links { display: flex; gap: 1.1rem; color: var(--ink-2); white-space: nowrap; }
+.top__links a:hover { color: var(--ink); text-decoration: underline; text-underline-offset: .3em; text-decoration-thickness: 1px; }
+
+/* ---------- big clock ---------- */
+.hero { position: relative; z-index: 1; padding: max(5rem, 14vh) var(--gutter) 0; text-align: center; pointer-events: none; }
+.hero__time {
+  font-family: var(--serif); font-size: clamp(3.2rem, min(16vw, 17vh), 8.5rem); line-height: 1; letter-spacing: -0.04em;
+  font-variation-settings: 'SOFT' 0, 'WONK' 1, 'opsz' 144, 'wght' 300;
+  font-variant-numeric: tabular-nums;
+}
+.hero__line { margin: 1.1rem auto 0; max-width: 28rem; font-size: 1rem; line-height: 1.55; color: var(--ink-2); text-wrap: balance; }
+.hero__line em { font-style: normal; color: var(--red); }
+@media (max-height: 34rem) and (orientation: landscape) {
+  .hero { padding-top: 3.4rem; }
+  .hero__time { font-size: clamp(2.4rem, 15vh, 4rem); }
+  .hero__line { margin-top: .5rem; font-size: .875rem; }
+}
+
+/* ---------- the field ---------- */
+.stage { position: fixed; inset: 0; z-index: 2; pointer-events: none; }
+.stage canvas { width: 100%; height: 100%; display: block; }
+
+/* light overlay from sunlight.js: above the field, below the header and the drifting grass */
+.sun { position: fixed; inset: 0; z-index: 4; pointer-events: none; }
+.sun canvas { position: absolute; inset: 0; width: 100%; height: 100%; display: block; }
+.sun__rays { filter: blur(4px); }
+
+/* drifting grass from drift.js: on top of everything, never blocks the mouse */
+.drift { position: fixed; inset: 0; width: 100%; height: 100%; z-index: 30; pointer-events: none; }
+
+/* ---------- time dial ---------- */
+.dial {
+  position: fixed; left: 0; right: 0; bottom: max(.5rem, env(safe-area-inset-bottom)); z-index: 10;
+  display: flex; justify-content: center; padding: 0 var(--gutter); cursor: default;
+}
+.dial__inner { width: min(34rem, 100%); }
+.dial__track { position: relative; height: 1.6rem; }
+/* the four looks along the day, as a thin strip of colour under the slider */
+.dial__bands {
+  position: absolute; left: 0; right: 0; top: 50%; height: 4px; margin-top: -2px; border-radius: 4px;
+  background: linear-gradient(90deg,
+    #1b2236 0%, #1b2236 19.8%, #6c6386 22%, #e7b98a 24.6%, #e9e4cf 29.2%,
+    #e9e4cf 66.7%, #e7b98a 71.9%, #e7b98a 75%, #6c6386 77.5%, #1b2236 80.8%, #1b2236 100%);
+  box-shadow: 0 0 0 1px color-mix(in srgb, var(--ink) 14%, transparent);
+}
+.dial__range {
+  position: absolute; inset: 0; width: 100%; height: 100%; margin: 0; background: none;
+  -webkit-appearance: none; appearance: none; cursor: pointer; touch-action: none;
+}
+.dial__range:focus-visible { outline: 2px solid var(--red); outline-offset: 4px; border-radius: 4px; }
+.dial__range::-webkit-slider-runnable-track { height: 100%; background: none; }
+.dial__range::-moz-range-track { height: 100%; background: none; }
+.dial__range::-webkit-slider-thumb {
+  -webkit-appearance: none; width: 6px; height: 1.1rem; margin-top: .25rem; border-radius: 999px;
+  background: var(--red); box-shadow: 0 0 0 2px var(--paper);
+}
+.dial__range::-moz-range-thumb {
+  width: 6px; height: 1.1rem; border: 0; border-radius: 999px; background: var(--red); box-shadow: 0 0 0 2px var(--paper);
+}
+.dial__meta { display: flex; justify-content: space-between; align-items: center; gap: .75rem; min-height: 2rem; }
+.dial__hint { font-size: .75rem; color: var(--ink-2); }
+.dial__keys { display: flex; gap: .3rem; flex-shrink: 0; }
+.dial__btn {
+  height: 1.8rem; padding: 0 .8rem; border-radius: 999px; font-size: .75rem; font-weight: 500; white-space: nowrap;
+  box-shadow: inset 0 0 0 1px color-mix(in srgb, var(--ink) 26%, transparent);
+  transition: background-color .15s var(--ease-out);
+}
+.dial__btn:hover { background: color-mix(in srgb, var(--ink) 8%, transparent); }
+.dial__btn[aria-pressed="true"], .dial__now.is-live { background: var(--primary); color: var(--on-primary); box-shadow: none; }
+/* phones: shorter wording so the header and the buttons fit on one line */
+@media (max-width: 30rem) {
+  .wide { display: none; }
+  .top__links { gap: .9rem; }
+}

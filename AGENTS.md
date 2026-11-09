@@ -7,16 +7,15 @@ Read this before changing anything. The README is for visitors; this file is for
 - The grass, lighting and drifting effects were first built for Vic Chen's portfolio site, therapist-160.github.io.
   That site's source is private. This repo holds **only the effects**, rewritten as standalone files with English
   comments, plus a demo page.
-- Deliberately left out: the portfolio's page layout and interactions (inspired by theboringblog.ai, so not ours to
-  open-source), client work images, and the characters that sit on the field.
+- Deliberately left out: the portfolio's page layout and interactions, client work images, and the characters that
+  sit on the field.
 - Goal: exposure and sharing. The demo page links back to the portfolio.
 
 ## Decisions (2026-11-09, Vic)
 
-- Personal account `Vic-Chen-160`, public, MIT licence.
+- Personal account `Vic-Chen-160`, public, MIT No Attribution (MIT-0) licence: no credit or notice required.
 - **Raw source only**: no npm package and no one-line embed. People take the files apart themselves, so keep the
   files readable and independent.
-- Credit theboringblog.ai for the painted-grass inspiration in the README.
 - The demo is served by GitHub Pages from the repo root (`index.html`).
 
 ## How it fits together

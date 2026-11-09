@@ -85,12 +85,11 @@ URL helpers: `?time=19:30` pins the time and `?nosun` keeps it daytime.
 
 ## Credits
 
-- The painted-grass look was inspired by the grass field on [theboringblog.ai](https://theboringblog.ai). All code, colours, drawings and the day-to-night system here are our own.
 - Built by Vic Chen ([therapist.160](https://therapist-160.github.io)) with Claude Code.
 
 ## License
 
-[MIT](LICENSE). Use it for anything, including client work. Just keep the licence notice.
+[MIT No Attribution (MIT-0)](LICENSE). Use it for anything, including client work. No credit or licence notice required.
 
 ---
 
@@ -115,6 +114,4 @@ URL helpers: `?time=19:30` pins the time and `?nosun` keeps it daytime.
 - 每個時段的樣子：`sunlight.js` 的 `PRESETS`
 - 草的顏色：`field.js` 著色器裡的 `BASE / PALE / DEEP…`
 
-**授權**：MIT，接案、商業用途都可以，保留授權聲明就好。
-
-草地的手繪風格參考了 [theboringblog.ai](https://theboringblog.ai) 的草地；這裡的程式、配色、繪圖和日夜系統都是我們自己做的。
+**授權**：MIT-0（MIT 免署名版），接案、商業用途都可以，不需要保留任何聲明。
